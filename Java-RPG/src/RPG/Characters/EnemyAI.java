@@ -10,7 +10,4 @@ public enum EnemyAI {
         this.enemyAction = enemyAction;
     }
 
-    public int getEnemyAction() {
-        return this.enemyAction;
-    }
 }
