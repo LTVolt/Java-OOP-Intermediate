@@ -1,0 +1,9 @@
+Scorpion
+Hornet
+Worm
+Goblin
+Orc
+Fairy
+Dragon
+Unicorn
+Bear
