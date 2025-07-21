@@ -1,5 +1,11 @@
 package RPG.Items;
 
-public class Item {
-    // For later usage!
+import RPG.Characters.Character;
+
+public interface Item {
+
+    String getName();
+    String getDescription();
+
+    void use(Character target);
 }

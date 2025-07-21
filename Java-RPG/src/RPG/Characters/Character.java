@@ -53,4 +53,11 @@ public abstract class Character {
     public int getDefense() {
         return this.defense;
     }
+
+    // RELEVANT SETTERS
+
+
+    public void setCurrentHealth(int currentHealth) {
+        this.currentHealth = Math.min(currentHealth, this.maxHealth); // Clamp between result and MAX HP
+    }
 }

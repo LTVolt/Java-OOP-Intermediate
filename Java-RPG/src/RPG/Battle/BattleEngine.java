@@ -2,6 +2,9 @@ package RPG.Battle;
 
 import RPG.Characters.Enemy;
 import RPG.Characters.Player;
+import RPG.Items.Bomb;
+import RPG.Items.Potion;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,14 +15,16 @@ import java.util.Random;
 public class BattleEngine {
 
     static Random randomizer = new Random();
+    static Player player = getPlayer();
 
-    public void battleStart() {
+    public void battle() {
         String filePath = "Enemies.txt";
         ArrayList<String> enemyList = new ArrayList<>();
         getEnemyList(filePath, enemyList);
 
-        Player player = getPlayer();
         Enemy enemy = getEnemy(enemyList);
+
+        setInventory();
 
         System.out.println("Battle begins between " + player.getName()
         + " and " + enemy.getName() + "!");
@@ -31,7 +36,8 @@ public class BattleEngine {
 
             switch (action) {
                 case 1 -> player.attackEnemy(enemy);
-                case 2 -> player.heal();
+                case 2 -> player.useItem(player);
+                case 3 -> player.useItem(enemy);
                 default -> System.out.println("Invalid Action!\n Enemy's Turn!");
             }
 
@@ -41,17 +47,17 @@ public class BattleEngine {
             }
         }
 
+        System.out.println();
+        System.out.println("******* BATTLE END *******");
         showStats(player, enemy);
 
         if (player.isDead()) {
             System.out.println("YOU LOSE...");
         } else System.out.println("YOU WIN!!");
 
-        while (player.choice < 1 || player.choice > 2) {
-            player.choice = player.chooseAction();
+        while (player.actionChoice < 1 || player.actionChoice > 2) {
+            player.actionChoice = player.chooseAction();
         }
-
-
     }
 
     private static void showStats(Player player, Enemy enemy) {
@@ -92,5 +98,13 @@ public class BattleEngine {
                 randomizer.nextInt(80, 121),
                 randomizer.nextInt(16, 22),
                 randomizer.nextInt(6, 11));
+    }
+
+    private static void setInventory() {
+        player.addItem(new Potion(randomizer.nextInt(15,41)));
+        player.addItem(new Potion(randomizer.nextInt(10,31)));
+        player.addItem(new Bomb(randomizer.nextInt(10,31)));
+
+        System.out.println("Inventory Loaded!");
     }
 }
